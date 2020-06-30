@@ -1,82 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:text="Let's Choose A Level"
-            android:gravity="center"
-            android:textSize="25sp"
-            android:layout_margin="20dp"
-            android:textStyle="bold"
+        <include
+            layout="@layout/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_weight="1"
-                android:layout_margin="15dp"
-                android:layout_width="match_parent"
-                android:background="@mipmap/ic_launcher_button"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:layout_weight="1"
-                android:layout_margin="15dp"
-                android:background="@mipmap/ic_launcher_button1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_weight="1"
-                android:layout_margin="15dp"
-                android:background="@mipmap/ic_launcher_button2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_weight="1"
-                android:layout_margin="15dp"
-                android:background="@mipmap/ic_launcher_button3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                android:background="@mipmap/ic_launcher_button5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                android:background="@mipmap/ic_launcher_button4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <Button
-            android:id="@+id/btn_chuyen"
-            android:layout_margin="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container"/>
 
-</ScrollView>
+    </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/nav_view"
+        app:menu="@menu/draw_menu"
+        app:headerLayout="@layout/nav_header_layout"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

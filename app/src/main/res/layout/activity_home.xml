@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Let's Choose A Level"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:text="Text your level english"
+            android:id="@+id/btn_test"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttona0" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttona1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttona2" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttonb1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttonb2" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_launcher_buttonc" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_chuyen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Log In" />
+    </LinearLayout>
+
+</ScrollView>

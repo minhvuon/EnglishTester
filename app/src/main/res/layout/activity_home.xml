@@ -21,8 +21,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_margin="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:text="Text your level english"
+            android:textColor="@color/colorAliceblue"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/ic_your_test"
+            android:background="@drawable/button_test_hover"
             android:id="@+id/btn_test"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,13 +36,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_test_a0"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@mipmap/ic_launcher_buttona0" />
+                android:background="@mipmap/ic_launcher_buttona0"
+                android:layout_weight="1" />
 
             <Button
+                android:id="@+id/btn_test_a1"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginRight="15dp"
@@ -52,6 +59,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_test_a2"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginLeft="15dp"
@@ -59,6 +67,7 @@
                 android:background="@mipmap/ic_launcher_buttona2" />
 
             <Button
+                android:id="@+id/btn_test_b1"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginRight="15dp"
@@ -73,6 +82,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_test_b2"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginLeft="15dp"
@@ -80,6 +90,7 @@
                 android:background="@mipmap/ic_launcher_buttonb2" />
 
             <Button
+                android:id="@+id/btn_test_c"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginRight="15dp"
@@ -92,7 +103,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="Log In" />
+            android:textStyle="italic"
+            android:background="@drawable/button_login_hover"
+            android:text="Log In With Me" />
     </LinearLayout>
 
 </ScrollView>

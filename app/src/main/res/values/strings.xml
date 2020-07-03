@@ -2,4 +2,17 @@
     <string name="app_name">English Tester</string>
     <string name="navigation_draw_open">Open navigation drawer</string>
     <string name="navigation_draw_close">Close navigation drawer</string>
+    <string name="english_test">English Test</string>
+    <string name="email">Email</string>
+    <string name="matkhau">Mật khẩu</string>
+    <string name="dangnhap">Đăng nhập</string>
+    <string name="quenmatkhau">Quên mật khẩu</string>
+    <string name="dangnhapnhanh">Đăng nhập nhanh</string>
+    <string name="todo">ToDo</string>
+    <string name="hoten">Họ tên</string>
+    <string name="nhaplaimatkhau">Nhập lại mật khẩu</string>
+    <string name="dangkithanhvien">Đăng kí thành viên</string>
+    <string name="x">X</string>
+    <string name="laylaimatkhau">Lấy lại mật khẩu</string>
+    <string name="gui">Gửi</string>
 </resources>

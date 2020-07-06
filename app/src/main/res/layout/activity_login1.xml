@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/login_id"
-    android:background="@mipmap/ic_login_foreground"
-    tools:context=".LoginActivity">
+    android:background="@drawable/ic_login"
+    tools:context=".LoginActivity1">
 
     <TextView
         android:id="@+id/textView"
@@ -92,32 +91,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtQMK" />
 
-    <ImageButton
-        android:id="@+id/imageBtnFaceBook"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="12dp"
-        android:background="@null"
-        android:contentDescription="@string/todo"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDangNhapNhanh"
-        app:srcCompat="@mipmap/ic_face_foreground" />
-
-
-    <ImageButton
-        android:id="@+id/imageBtnGoogle"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="100dp"
-        android:background="@null"
-        android:contentDescription="@string/todo"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDangNhapNhanh"
-        app:srcCompat="@mipmap/ic_gg_foreground" />
 
     <TextView
         android:id="@+id/txtDangki"
@@ -131,5 +104,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageBtnGoogle" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

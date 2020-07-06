@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/dialog_hover">
 
 
     <TextView
@@ -13,9 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/english_test"
-        android:textColor="#EBEDE7"
-        android:textSize="50sp"
+        android:text="Create A Account"
+        android:textColor="@color/colorDrarkMode"
+        android:textSize="30sp"
+        android:fontFamily="serif-monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +26,10 @@
         android:id="@+id/edtHoTEn"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/botron"
         android:ems="10"
         android:hint="@string/hoten"
@@ -39,8 +43,10 @@
         android:id="@+id/edtEmail"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:paddingLeft="10dp"
+
         android:inputType="textEmailAddress"
         android:hint="@string/email"
         android:background="@drawable/botron"
@@ -53,7 +59,8 @@
         android:id="@+id/edtMatKhau1"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/matkhau"
@@ -66,7 +73,8 @@
         android:id="@+id/edtMatKhau2"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/nhaplaimatkhau"
@@ -81,12 +89,17 @@
         android:id="@+id/btnDangKi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/botron"
         android:text="@string/dangkithanhvien"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtMatKhau2" />
+        app:layout_constraintTop_toBottomOf="@+id/edtMatKhau2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnThoat"

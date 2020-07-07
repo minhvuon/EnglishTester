@@ -1,11 +1,13 @@
 package com.example.englishtester;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,12 +28,16 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtQNK, txtTaoTaiKhoan;
     EditText edEmail, edPass;
     Button btnLogin;
-    private String urlData = "http://127.0.0.1/English/checkAccount.php";
+    public static final String uURL_DATA = "http://192.168.1.12/English/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         anhxa();
 
@@ -41,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 DialogQuenMK();
             }
         });
-
         txtTaoTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.isEmpty() || pass.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
-                    checkAccount(urlData);
+                    checkAccount(uURL_DATA + "checkAccount.php");
                 }
             }
         });
@@ -133,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (response.trim().equals("success")){
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
                         }
                         else {
                             if (response.trim().equals("tk")){

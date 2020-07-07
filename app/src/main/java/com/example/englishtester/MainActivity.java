@@ -6,12 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +41,37 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeActivity()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHome()).commit();
             navigationView.setCheckedItem(R.id.id_nav_home);
         }
+        navigationClick();
 
+        bottomNavigationView.setSelectedItemId(R.id.bt_nav_home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+
+
+
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment fragmentSelected = null;
+                    switch (menuItem.getItemId()){
+                        case R.id.bt_nav_home:
+                            fragmentSelected = new FragmentHome();
+                            break;
+                        case R.id.bt_nav_me:
+                            fragmentSelected = new FragmentMe();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentSelected).commit();
+                    return true;
+                }
+            };
+
+    private void navigationClick() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -45,13 +79,21 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
                     case R.id.id_nav_home:
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeActivity()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHome()).commit();
                         break;
                     case R.id.id_nav_test:
                         Toast.makeText(MainActivity.this, "Test", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.id_nav_learn:
                         Toast.makeText(MainActivity.this, "Learn", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_add_account:
+                        Toast.makeText(MainActivity.this, "Show dialog ddawng ki", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_logout:
+                        Toast.makeText(MainActivity.this, "LOG OUT", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, DelayActivity.class));
+                        finish();
                         break;
                     default:
                         return true;
@@ -64,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
     void setWidget() {
         toolbar = findViewById(R.id.toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_nav);
 
     }
 
@@ -89,23 +132,17 @@ public class MainActivity extends AppCompatActivity {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
-        switch (item.getItemId()){
-            case R.id.menu_about:
-                Toast.makeText(this, "show dialog gioi thieu", Toast.LENGTH_SHORT).show();
-                break;
+        if (item.getItemId() == R.id.menu_about) {
+            showDialogAbout();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                drawer.openDrawer(GravityCompat.START);
-//                return true;
-//            default:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    void showDialogAbout(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_about);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
 }

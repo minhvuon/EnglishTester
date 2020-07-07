@@ -28,7 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtQNK, txtTaoTaiKhoan;
     EditText edEmail, edPass;
     Button btnLogin;
-    public static final String uURL_DATA = "http://192.168.1.12/English/";
+    public static String urlData = "http://192.168.1.10/English/";
+    public static String urlCheckAccount = urlData+"checkAccount.php";
+    public static String urlInsert = urlData+"insert.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.isEmpty() || pass.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
-                    checkAccount(uURL_DATA + "checkAccount.php");
+                    checkAccount(urlCheckAccount);
                 }
             }
         });

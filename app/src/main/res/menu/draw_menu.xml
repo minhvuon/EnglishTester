@@ -24,9 +24,9 @@
                 android:icon="@drawable/ic_add"
                 android:title="Add account" />
             <item
-                android:id="@+id/id_nav_login"
-                android:icon="@drawable/ic_login"
-                android:title="Log In" />
+                android:id="@+id/id_nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Log Out" />
         </menu>
     </item>
 </menu>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtQNK, txtTaoTaiKhoan;
     EditText edEmail, edPass;
     Button btnLogin;
-    private String urlData = "http://127.0.0.1/English/checkAccount.php";
+    public static String urlData = "http://192.168.1.10/English/";
+    public static String urlCheckAccount = urlData+"checkAccount.php";
+    public static String urlInsert = urlData+"insert.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_dangki);
         dialog.setCanceledOnTouchOutside(false);
 
-
         //anh xa
         final EditText edtHoTen, edtEmail, edtMatKhau, edtMatKhauNhapLai;
         Button btnDangKi, btnThoat;
 
-        edtHoTen = (EditText) dialog.findViewById(R.id.edtHoTEn);
-
+        edtHoTen = (EditText) dialog.findViewById(R.id.edtHoTen);
         edtEmail = (EditText) dialog.findViewById(R.id.edtEmail);
         edtMatKhau = (EditText) dialog.findViewById(R.id.edtMatKhau1);
         edtMatKhauNhapLai = (EditText) dialog.findViewById(R.id.edtMatKhau2);
@@ -93,9 +94,23 @@ public class LoginActivity extends AppCompatActivity {
         btnDangKi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String hoTen = edtHoTen.getText().toString().trim();
                 String email = edtEmail.getText().toString().trim();
                 String matKhau = edtMatKhau.getText().toString().trim();
                 String matKhau2 = edtMatKhauNhapLai.getText().toString().trim();
+
+                if(hoTen.isEmpty()||email.isEmpty()||matKhau.isEmpty()||matKhau2.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Vui long nhap du thong tin", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    if(matKhau.equals(matKhau2)) {
+                        taoTaiKhoan(urlInsert, email, hoTen, matKhau);
+                        dialog.cancel();
+                    }
+                    else
+                        Toast.makeText(LoginActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -106,7 +121,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
 
+    void taoTaiKhoan(String url, final String email, final String hoTen, final String matKhau){
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.trim().equals("co"))
+                    Toast.makeText(LoginActivity.this, "Email da ton tai", Toast.LENGTH_SHORT).show();
+                if (response.trim().equals("thanhcong")) {
+                    Toast.makeText(LoginActivity.this, "Dang ki Thanh cong", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Dang ki that bai", Toast.LENGTH_SHORT).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(LoginActivity.this, "Xay ra loi", Toast.LENGTH_SHORT).show();
+                        Log.d("AAA", "Loi\n" + error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("username", hoTen);
+                params.put("password", matKhau);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     void dangNhap(){
@@ -118,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.isEmpty() || pass.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
-                    checkAccount(urlData);
+                    checkAccount(urlCheckAccount);
                 }
             }
         });

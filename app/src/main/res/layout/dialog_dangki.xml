@@ -23,7 +23,7 @@
 
 
     <EditText
-        android:id="@+id/edtHoTEn"
+        android:id="@+id/edtHoTen"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"
@@ -52,7 +52,7 @@
         android:background="@drawable/botron"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtHoTEn"
+        app:layout_constraintTop_toBottomOf="@+id/edtHoTen"
         android:autofillHints="" />
 
     <EditText

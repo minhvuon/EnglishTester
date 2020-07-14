@@ -21,8 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".time" />
-        <activity android:name=".fragment_question" />
+        <activity android:name=".TimeActivity"
+            android:label="TEST"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".IntroductionActivity" />
         <activity
             android:name=".TestActivity"

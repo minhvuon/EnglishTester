@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.renderscript.ScriptGroup;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtQNK, txtTaoTaiKhoan;
     EditText edEmail, edPass;
     Button btnLogin;
-    public static String urlData = "http://192.168.1.10/English/";
-    public static String urlCheckAccount = urlData+"checkAccount.php";
+    CheckBox cbLogin,cbShowPas;
+    public static String urlData = "http://192.168.1.17/English/";
+    public static String urlCheckAccount = urlData+"checklogin.php";
     public static String urlInsert = urlData+"insert.php";
+    public static String urlGetDataB1 = "http://192.168.1.17/English/cauhoib1.php";
+    SharedPreferences sharedPreferences;
+    String email;
+    String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,15 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.hide();
 
         anhxa();
+
+        sharedPreferences = getSharedPreferences("dataLogin",MODE_PRIVATE);
+
+        //laygia tri
+        edEmail.setText(sharedPreferences.getString("email",""));
+        edPass.setText(sharedPreferences.getString("password",""));
+        cbLogin.setChecked(sharedPreferences.getBoolean("",false));
+
+        showPass();
 
         txtQNK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +83,34 @@ public class LoginActivity extends AppCompatActivity {
         dangNhap();
     }
 
+    private void showPass() {
+        cbShowPas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b)
+                {
+                    cbShowPas.setText("Show Password");
+                    edPass.setInputType(InputType.TYPE_CLASS_TEXT);
+                    edPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else
+                {
+                    cbShowPas.setText("Hide Password");
+                    edPass.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    edPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+    }
+
     public void anhxa(){
         txtQNK  =(TextView)findViewById(R.id.txtQMK);
         txtTaoTaiKhoan = (TextView)findViewById(R.id.txtDangki);
         btnLogin = findViewById(R.id.btnDangNhap);
         edEmail = findViewById(R.id.edtEmail);
         edPass = findViewById(R.id.edtMatKhau);
+        cbLogin = findViewById(R.id.cbLogin);
+        cbShowPas = findViewById(R.id.cbShowpass);
     }
     private  void DialogQuenMK(){
         final Dialog dialog = new Dialog(this);
@@ -171,8 +210,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edEmail.getText().toString().trim();
-                String pass = edPass.getText().toString().trim();
+                email = edEmail.getText().toString().trim();
+                pass = edPass.getText().toString().trim();
                 if(email.isEmpty() || pass.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
@@ -183,6 +222,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void checkAccount(String url){
+        email = edEmail.getText().toString().trim();
+        pass = edPass.getText().toString().trim();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -191,13 +232,29 @@ public class LoginActivity extends AppCompatActivity {
                         if (response.trim().equals("success")){
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            if(cbLogin.isChecked()){
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("email",email);
+                                editor.putString("password",pass);
+                                editor.putBoolean("checked",true);
+                                editor.commit();
+                            }
+                            else {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.remove("email");
+                                editor.remove("password");
+                                editor.remove("checked");
+                                editor.commit();
+                            }
                             finish();
                         }
                         else {
                             if (response.trim().equals("tk")){
                                 Toast.makeText(LoginActivity.this, "Email của bạn không hợp lệ", Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(LoginActivity.this, "Password của bạn không đúng", Toast.LENGTH_SHORT).show();
+                                if (response.trim().equals("mk")){
+                                    Toast.makeText(LoginActivity.this, "Password của bạn không đúng", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     }

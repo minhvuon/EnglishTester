@@ -17,8 +17,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.englishtester.model.Question;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
     BottomNavigationView bottomNavigationView;
+    public static String TYPE_QUESTION = "B1";
+    public static ArrayList<Question> questionArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setWidget();
+        questionArrayList = new ArrayList<Question>();
 
         setSupportActionBar(toolbar);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawer, toolbar, R.string.navigation_draw_open, R.string.navigation_draw_close);

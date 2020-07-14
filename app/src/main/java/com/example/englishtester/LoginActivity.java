@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaCodec;
 import android.os.Bundle;
 
 import android.renderscript.ScriptGroup;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     TextView txtQNK, txtTaoTaiKhoan;
@@ -43,6 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     public static String urlCheckAccount = urlData+"checklogin.php";
     public static String urlInsert = urlData+"insert.php";
     public static String urlGetDataB1 = "http://192.168.1.17/English/cauhoib1.php";
+    public static final Pattern EMAIL_ADDRESS = Pattern.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"+"\\@"
+            +"[a-zA-Z0-9][a-zA-Z0-9\\-]{1,64}"+
+            "("+"\\."+
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"+")+");
     SharedPreferences sharedPreferences;
     String email;
     String pass;
@@ -152,15 +158,17 @@ public class LoginActivity extends AppCompatActivity {
                 if(hoTen.isEmpty()||email.isEmpty()||matKhau.isEmpty()||matKhau2.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui long nhap du thong tin", Toast.LENGTH_SHORT).show();
                 }
+                else if(!EMAIL_ADDRESS.matcher(email).matches()){
+                    edtEmail.setError("Email Invalie");
+                }
                 else
-                {
                     if(matKhau.equals(matKhau2)) {
                         taoTaiKhoan(urlInsert, email, hoTen, matKhau);
                         dialog.cancel();
                     }
                     else
                         Toast.makeText(LoginActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 
@@ -214,7 +222,10 @@ public class LoginActivity extends AppCompatActivity {
                 pass = edPass.getText().toString().trim();
                 if(email.isEmpty() || pass.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(!EMAIL_ADDRESS.matcher(email).matches()){
+                    edEmail.setError("Email Invalie");
+                }
+                else{
                     checkAccount(urlCheckAccount);
                 }
             }

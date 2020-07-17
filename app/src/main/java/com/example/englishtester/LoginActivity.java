@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         //laygia tri
         edEmail.setText(sharedPreferences.getString("email",""));
         edPass.setText(sharedPreferences.getString("password",""));
-        cbLogin.setChecked(sharedPreferences.getBoolean("",false));
+        cbLogin.setChecked(sharedPreferences.getBoolean("checked",false));
 
         showPass();
 

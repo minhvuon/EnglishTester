@@ -2,7 +2,7 @@
     <string name="app_name">English Tester</string>
     <string name="navigation_draw_open">Open navigation drawer</string>
     <string name="navigation_draw_close">Close navigation drawer</string>
-    <string name="english_test">English Test</string>
+    <string name="english_test">English Tester</string>
     <string name="email">Email</string>
     <string name="matkhau"> Password </string>
     <string name="dangnhap">LOG IN</string>

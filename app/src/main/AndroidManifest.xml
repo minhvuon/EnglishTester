@@ -27,7 +27,6 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".IntroductionActivity" />
         <activity
             android:name=".TestActivity"
             android:label="Test" />

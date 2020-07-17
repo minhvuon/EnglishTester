@@ -20,7 +20,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragmentQuestion = new FragmentQuestion();
-        position = position;
         Bundle bundle = new Bundle();
         bundle.putInt("pageNumber", position);
         fragmentQuestion.setArguments(bundle);

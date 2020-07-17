@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.englishtester.model.Answer;
 import com.example.englishtester.model.Question;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     public static String TYPE_QUESTION = "B1";
     public static ArrayList<Question> questionArrayList;
+    public static ArrayList<Answer> answerArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         setWidget();
         questionArrayList = new ArrayList<Question>();
+        answerArrayList = new ArrayList<Answer>();
 
         setSupportActionBar(toolbar);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawer, toolbar, R.string.navigation_draw_open, R.string.navigation_draw_close);

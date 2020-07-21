@@ -1,8 +1,10 @@
 package com.example.englishtester;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Dialog;
@@ -10,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.englishtester.adapter.ViewPagerAdapter;
+import com.example.englishtester.adapter.CheckAnswerAdapter;
 import com.example.englishtester.model.Answer;
 import com.example.englishtester.model.Question;
 
@@ -36,13 +40,16 @@ import static com.example.englishtester.LoginActivity.urlGetDataB1;
 import static com.example.englishtester.MainActivity.answerArrayList;
 import static com.example.englishtester.MainActivity.questionArrayList;
 import static com.example.englishtester.MainActivity.TYPE_QUESTION;
-
+import static com.example.englishtester.MainActivity.checkAnswerEl;
 
 public class TimeActivity extends AppCompatActivity {
-    Button btnStart, btnListQues, btnSubmit;
+
+
+    Button btnStart, btnListQues, btnSubmit, btnScoce;
     TextView txtTimer;
     ViewPager viewPager;
-    ViewPagerAdapter viewPagerAdapter;
+    CountDownTimer countDownTimer;
+    DataViewN viewPagerAdapter;
     private long timeSeconds = 900000;
 
     @Override
@@ -62,13 +69,14 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewPager.setOffscreenPageLimit(1);
-                viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                viewPagerAdapter = new DataViewN(getSupportFragmentManager());
+                viewPager.setOffscreenPageLimit(1);
                 viewPager.setAdapter(viewPagerAdapter);
-                viewPager.setCurrentItem(0);
                 btnStart.setVisibility(View.GONE);
                 btnListQues.setVisibility(View.VISIBLE);
                 btnSubmit.setVisibility(View.VISIBLE);
                 startTimer();
+
             }
         });
 
@@ -82,33 +90,101 @@ public class TimeActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resultSubmit();
+                checkAnswer();
             }
         });
+
     }
 
-    void resultSubmit(){
+    void Result() {
+        if (viewPager.getCurrentItem() >= 5)
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 5);
+        else if (viewPager.getCurrentItem() < 5)
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 5);
+//        viewPager.setCurrentItem(0);
+        btnSubmit.setVisibility(View.GONE);
+        btnScoce.setVisibility(View.VISIBLE);
+
+    }
+
+    public static class DataViewN extends FragmentPagerAdapter {
+        public DataViewN(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return FragmentQuestion.create(position, checkAnswerEl);
+        }
+
+        @Override
+        public int getCount() {
+            return 10;
+        }
+    }
+
+    void checkAnswer() {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.check_answer_dialog);
+
+        CheckAnswerAdapter answerAdapter = new CheckAnswerAdapter(questionArrayList, this);
+        GridView gvlsQuestion = (GridView) dialog.findViewById(R.id.gvlsQuestion);
+        gvlsQuestion.setAdapter(answerAdapter);
+        gvlsQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                viewPager.setCurrentItem(i);
+                dialog.dismiss();
+            }
+        });
+        Button btnCancel, btnSubmitXN;
+        btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnSubmitXN = (Button) dialog.findViewById(R.id.btnSubmitXN);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        btnSubmitXN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ////
+                checkAnswerEl = 1;
+                Result();
+                dialog.dismiss();
+                countDownTimer.cancel();
+
+
+            }
+        });
+        dialog.show();
+    }
+
+    void resultSubmit() {
         int right = 0;
         try {
-            for (int i=0; i< questionArrayList.size(); i++){
+            for (int i = 0; i < questionArrayList.size(); i++) {
                 Question question = questionArrayList.get(i);
                 Answer answer = answerArrayList.get(i);
                 Toast.makeText(TimeActivity.this, question.toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(TimeActivity.this, answer.toString(), Toast.LENGTH_SHORT).show();
 
-                if (question.getRightAnswer().equals(answer.getAnswer())){
+                if (question.getRightAnswer().equals(answer.getAnswer())) {
                     right += 1;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(TimeActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         Toast.makeText(TimeActivity.this, Integer.toString(right), Toast.LENGTH_SHORT).show();
     }
 
-    void startTimer(){
-        new CountDownTimer(timeSeconds, 1000) {
+    void startTimer() {
+        countDownTimer = new CountDownTimer(timeSeconds, 1000) {
             @Override
             public void onTick(long l) {
                 timeSeconds = l;
@@ -141,6 +217,7 @@ public class TimeActivity extends AppCompatActivity {
         btnListQues = findViewById(R.id.btn_list_ques);
         btnSubmit = findViewById(R.id.btn_submit);
         txtTimer = findViewById(R.id.tvTimer);
+        btnScoce = findViewById(R.id.btn_scoce);
     }
 
     void getDataB1(String url) {
@@ -156,12 +233,13 @@ public class TimeActivity extends AppCompatActivity {
                                 questionArrayList.add(new Question(
                                         jsonObject.getString("STT"),
                                         jsonObject.getString("cauhoi"),
-                                        jsonObject.getString("theloai"),
                                         jsonObject.getString("dapanA"),
                                         jsonObject.getString("dapanB"),
                                         jsonObject.getString("dapanC"),
                                         jsonObject.getString("dapanD"),
-                                        jsonObject.getString("ketqua")
+                                        jsonObject.getString("ketqua"),
+                                        jsonObject.getString("theloai"),
+                                        ""
                                 ));
                             }
                         } catch (JSONException e) {
@@ -185,42 +263,45 @@ public class TimeActivity extends AppCompatActivity {
         };
         requestQueue.add(jsonObjectRequest);
     }
-    void dialogListQuestion(){
+
+    void dialogListQuestion() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_list_question);
-        Button btnQues1 = (Button)dialog.findViewById(R.id.btn_1);
+        Button btnQues1 = (Button) dialog.findViewById(R.id.btn_1);
         setDialogListQuestionButton(btnQues1, 0, dialog);
-        Button btnQues2 = (Button)dialog.findViewById(R.id.btn_2);
+        Button btnQues2 = (Button) dialog.findViewById(R.id.btn_2);
         setDialogListQuestionButton(btnQues2, 1, dialog);
-        Button btnQues3 = (Button)dialog.findViewById(R.id.btn_3);
+        Button btnQues3 = (Button) dialog.findViewById(R.id.btn_3);
         setDialogListQuestionButton(btnQues3, 2, dialog);
-        Button btnQues4 = (Button)dialog.findViewById(R.id.btn_4);
+        Button btnQues4 = (Button) dialog.findViewById(R.id.btn_4);
         setDialogListQuestionButton(btnQues4, 3, dialog);
-        Button btnQues5 = (Button)dialog.findViewById(R.id.btn_5);
+        Button btnQues5 = (Button) dialog.findViewById(R.id.btn_5);
         setDialogListQuestionButton(btnQues5, 4, dialog);
-        Button btnQues6 = (Button)dialog.findViewById(R.id.btn_6);
+        Button btnQues6 = (Button) dialog.findViewById(R.id.btn_6);
         setDialogListQuestionButton(btnQues6, 5, dialog);
-        Button btnQues7 = (Button)dialog.findViewById(R.id.btn_7);
+        Button btnQues7 = (Button) dialog.findViewById(R.id.btn_7);
         setDialogListQuestionButton(btnQues7, 6, dialog);
-        Button btnQues8 = (Button)dialog.findViewById(R.id.btn_8);
+        Button btnQues8 = (Button) dialog.findViewById(R.id.btn_8);
         setDialogListQuestionButton(btnQues8, 7, dialog);
-        Button btnQues9 = (Button)dialog.findViewById(R.id.btn_9);
+        Button btnQues9 = (Button) dialog.findViewById(R.id.btn_9);
         setDialogListQuestionButton(btnQues9, 8, dialog);
-        Button btnQues10 = (Button)dialog.findViewById(R.id.btn_10);
+        Button btnQues10 = (Button) dialog.findViewById(R.id.btn_10);
         setDialogListQuestionButton(btnQues10, 9, dialog);
         dialog.show();
     }
 
-    void setDialogListQuestionButton(View view, final int pos, final Dialog dia){
+    void setDialogListQuestionButton(View view, final int pos, final Dialog dia) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setOffscreenPageLimit(1);
-                viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                viewPagerAdapter = new DataViewN(getSupportFragmentManager());
                 viewPager.setCurrentItem(pos);
+
                 btnStart.setVisibility(View.GONE);
                 dia.cancel();
             }
         });
     }
+
 }

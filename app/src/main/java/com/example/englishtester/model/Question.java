@@ -1,6 +1,8 @@
 package com.example.englishtester.model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     private String idQuestion;
     private String question;
     private String answerA;
@@ -9,16 +11,28 @@ public class Question {
     private String answerD;
     private String rightAnswer;
     private String typeQuestion;
+    private String youAnswer;
+    public int choiceID;
 
-    public Question(String idQuestion, String question, String typeQuestion, String answerA, String answerB, String answerC, String answerD, String rightAnswer) {
+    public Question(String idQuestion, String question, String answerA, String answerB, String answerC, String answerD, String rightAnswer, String typeQuestion, String youAnswer) {
         this.idQuestion = idQuestion;
         this.question = question;
+
         this.answerA = answerA;
         this.answerB = answerB;
         this.answerC = answerC;
         this.answerD = answerD;
         this.rightAnswer = rightAnswer;
         this.typeQuestion = typeQuestion;
+        this.youAnswer = youAnswer;
+    }
+
+    public String getYouAnswer() {
+        return youAnswer;
+    }
+
+    public void setYouAnswer(String youAnswer) {
+        this.youAnswer = youAnswer;
     }
 
     public String getIdQuestion() {

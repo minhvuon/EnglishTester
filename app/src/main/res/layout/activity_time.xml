@@ -97,6 +97,20 @@
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_scoce"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="Scoce"
+                android:textAllCaps="false"
+                android:background="#3eafff"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
         </LinearLayout>
     </LinearLayout>
 

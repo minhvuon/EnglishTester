@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static String TYPE_QUESTION = "B1";
     public static ArrayList<Question> questionArrayList;
     public static ArrayList<Answer> answerArrayList;
+    public static int checkAnswerEl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

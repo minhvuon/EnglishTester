@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="@drawable/dialog_hover"
+
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List Question"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="#D60850"
+        android:fontFamily="casual"
+        android:textStyle="bold"/>
+<GridView
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:numColumns="2"
+    android:id="@+id/gvlsQuestion"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="Cancel"/>
+        <Button
+            android:id="@+id/btnSubmitXN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="Submit"/>
+    </LinearLayout>
+</LinearLayout>

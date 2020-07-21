@@ -19,6 +19,7 @@ import java.util.Objects;
 
 import static com.example.englishtester.MainActivity.answerArrayList;
 import static com.example.englishtester.MainActivity.questionArrayList;
+import static com.example.englishtester.MainActivity.checkAnswerEl;
 
 public class FragmentHome extends Fragment {
 
@@ -67,6 +68,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View view) {
                 questionArrayList.clear();
                 answerArrayList.clear();
+                checkAnswerEl = 0;
                 for (int i=1; i<11; i++){
                     Answer answer = new Answer(Integer.toString(i), "E");
                     answerArrayList.add(answer);

@@ -7,3 +7,5 @@ lệnh chuyển branch "git checkout [tên branch]"
 làm song rồi commit --> push lên branch đó
 
 cuối cùng lên respositoris của mình pull requests.
+
+chay khong dc thi vao build.gradle doi 30 thanh 28

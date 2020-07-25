@@ -1,5 +1,6 @@
 package com.example.englishtester.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.englishtester.R;
-import com.example.englishtester.model.Answer;
 import com.example.englishtester.model.Question;
 
 import java.util.ArrayList;
@@ -39,10 +39,10 @@ public class CheckAnswerAdapter extends BaseAdapter {
 
     private static class ViewHolder{ TextView tvNumAns,tvYouAns;
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Question question = (Question)getItem(i);
-        //Answer answer = (Answer)getItem(i);
         ViewHolder viewHolder;
         if(view == null){
             viewHolder = new ViewHolder();
@@ -57,7 +57,6 @@ public class CheckAnswerAdapter extends BaseAdapter {
         int position = i + 1;
         viewHolder.tvNumAns.setText("Answer "+ position +":  ");
         viewHolder.tvYouAns.setText(question.getYouAnswer());
-        //viewHolder.tvYouAns.setText(answer.getAnswer());
         return view;
     }
 }

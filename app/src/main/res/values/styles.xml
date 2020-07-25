@@ -25,4 +25,9 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:background">@drawable/rectangle_button</item>
     </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">#067e5c</item>
+        <item name="android:textColorPrimary">#067e5c</item>
+    </style>
 </resources>

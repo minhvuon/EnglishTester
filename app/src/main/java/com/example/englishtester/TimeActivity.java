@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,10 +25,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.englishtester.adapter.CheckAnswerAdapter;
-import com.example.englishtester.model.Answer;
 import com.example.englishtester.model.Question;
 
 import org.json.JSONArray;
@@ -37,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.englishtester.LoginActivity.urlGetDataB1;
-import static com.example.englishtester.MainActivity.answerArrayList;
 import static com.example.englishtester.MainActivity.questionArrayList;
 import static com.example.englishtester.MainActivity.TYPE_QUESTION;
 import static com.example.englishtester.MainActivity.checkAnswerEl;
@@ -50,7 +50,7 @@ public class TimeActivity extends AppCompatActivity {
     ViewPager viewPager;
     CountDownTimer countDownTimer;
     DataViewN viewPagerAdapter;
-    private long timeSeconds = 900000;
+    private long timeSeconds = 150000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class TimeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_time);
 
         setWidget();
-
+        dialog_Notification();
         Intent intent = getIntent();
         TYPE_QUESTION = intent.getStringExtra("typeQuestion");
         if (questionArrayList.isEmpty()) {
@@ -79,7 +79,16 @@ public class TimeActivity extends AppCompatActivity {
 
             }
         });
+        btnScoce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent1 = new Intent(TimeActivity.this, ShowScoreActivity.class);
+                intent1.putExtra("arr_question", questionArrayList);
+                startActivity(intent1);
+                finish();
+            }
+        });
         btnListQues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,10 +110,23 @@ public class TimeActivity extends AppCompatActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 5);
         else if (viewPager.getCurrentItem() < 5)
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 5);
-//        viewPager.setCurrentItem(0);
         btnSubmit.setVisibility(View.GONE);
         btnScoce.setVisibility(View.VISIBLE);
 
+    }
+
+    void dialog_Notification() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(TimeActivity.this);
+        dialog.setTitle("Notification");
+        dialog.setMessage("This test has 10 question, the test time is 15 minutes.");
+
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.show();
     }
 
     public static class DataViewN extends FragmentPagerAdapter {
@@ -120,7 +142,7 @@ public class TimeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 10;
+            return questionArrayList.size();
         }
     }
 
@@ -151,37 +173,15 @@ public class TimeActivity extends AppCompatActivity {
         btnSubmitXN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ////
                 checkAnswerEl = 1;
                 Result();
                 dialog.dismiss();
                 countDownTimer.cancel();
-
-
             }
         });
         dialog.show();
     }
 
-    void resultSubmit() {
-        int right = 0;
-        try {
-            for (int i = 0; i < questionArrayList.size(); i++) {
-                Question question = questionArrayList.get(i);
-                Answer answer = answerArrayList.get(i);
-                Toast.makeText(TimeActivity.this, question.toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(TimeActivity.this, answer.toString(), Toast.LENGTH_SHORT).show();
-
-                if (question.getRightAnswer().equals(answer.getAnswer())) {
-                    right += 1;
-                }
-            }
-        } catch (Exception e) {
-            Toast.makeText(TimeActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-        Toast.makeText(TimeActivity.this, Integer.toString(right), Toast.LENGTH_SHORT).show();
-    }
 
     void startTimer() {
         countDownTimer = new CountDownTimer(timeSeconds, 1000) {
@@ -193,7 +193,8 @@ public class TimeActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                checkAnswerEl = 1;
+                Result();
             }
         }.start();
     }
@@ -222,14 +223,15 @@ public class TimeActivity extends AppCompatActivity {
 
     void getDataB1(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(TimeActivity.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("cauhoi");
+                            JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+
                                 questionArrayList.add(new Question(
                                         jsonObject.getString("STT"),
                                         jsonObject.getString("cauhoi"),
@@ -250,7 +252,7 @@ public class TimeActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(TimeActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TimeActivity.this, "Error, please try again!", Toast.LENGTH_LONG).show();
                     }
                 }
         ) {
@@ -261,7 +263,7 @@ public class TimeActivity extends AppCompatActivity {
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
     }
 
     void dialogListQuestion() {

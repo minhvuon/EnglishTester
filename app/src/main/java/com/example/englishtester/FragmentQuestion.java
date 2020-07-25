@@ -14,11 +14,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.englishtester.model.Answer;
 import com.example.englishtester.model.Question;
 
-import static com.example.englishtester.MainActivity.answerArrayList;
 import static com.example.englishtester.MainActivity.checkAnswerEl;
 import static com.example.englishtester.MainActivity.questionArrayList;
 
@@ -44,11 +41,8 @@ public class FragmentQuestion extends Fragment {
         setWidget();
 
         setData();
-
         checkQuestion();
-
         ficColor();
-        Toast.makeText(getContext(), Integer.toString(checkAnswerEl), Toast.LENGTH_SHORT).show();
 
         return view;
     }
@@ -71,20 +65,6 @@ public class FragmentQuestion extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 getItemm(pageNumber).choiceID = i;
                 getItemm(pageNumber).setYouAnswer(getChoiceFromID(i));
-                switch (i) {
-                    case R.id.radA:
-                        answerArrayList.set(pageNumber, new Answer(Integer.toString(pageNumber + 1), "A"));
-                        break;
-                    case R.id.radB:
-                        answerArrayList.set(pageNumber, new Answer(Integer.toString(pageNumber + 1), "B"));
-                        break;
-                    case R.id.radC:
-                        answerArrayList.set(pageNumber, new Answer(Integer.toString(pageNumber + 1), "C"));
-                        break;
-                    case R.id.radD:
-                        answerArrayList.set(pageNumber, new Answer(Integer.toString(pageNumber + 1), "D"));
-                        break;
-                }
             }
         });
     }
@@ -95,21 +75,49 @@ public class FragmentQuestion extends Fragment {
             rabB.setClickable(false);
             rabC.setClickable(false);
             rabD.setClickable(false);
-            //Toast.makeText(getActivity(), questionArrayList.get(pageNumber).toString(), Toast.LENGTH_SHORT).show();
-            getCheckAns(questionArrayList.get(pageNumber).getRightAnswer());
+            getCheckAns(questionArrayList.get(pageNumber).getRightAnswer(), questionArrayList.get(pageNumber).getYouAnswer());
         }
     }
 
-    private void getCheckAns(String answer) {
+    private void getCheckAns(String answer, String your_answer) {
+        View view = checkYourAnswer(your_answer);
         if (answer.equals("A")) {
-            rabA.setBackgroundColor(Color.BLUE);
+            if (!your_answer.equals("A") && !your_answer.equals("")){
+                view.setBackgroundColor(Color.RED);
+            }
+            rabA.setBackgroundColor(Color.GREEN);
         } else if (answer.equals("B")) {
-            rabB.setBackgroundColor(Color.BLUE);
+            if (!your_answer.equals("B") && !your_answer.equals("")){
+                view.setBackgroundColor(Color.RED);
+            }
+            rabB.setBackgroundColor(Color.GREEN);
         } else if (answer.equals("C")) {
-            rabC.setBackgroundColor(Color.BLUE);
+            if (!your_answer.equals("C") && !your_answer.equals("")){
+                view.setBackgroundColor(Color.RED);
+            }
+            rabC.setBackgroundColor(Color.GREEN);
         } else {
-            rabD.setBackgroundColor(Color.BLUE);
+            if (!your_answer.equals("D") && !your_answer.equals("")){
+                view.setBackgroundColor(Color.RED);
+            }
+            rabD.setBackgroundColor(Color.GREEN);
         }
+    }
+
+    private View checkYourAnswer(String your_answer){
+        if (your_answer.equals("A")) {
+            return rabA;
+        }else {
+            if (your_answer.equals("B")){
+                return rabB;
+            }
+            else {
+                if (your_answer.equals("C")){
+                    return rabC;
+                }
+            }
+        }
+        return rabD;
     }
 
     public Question getItemm(int position) {
@@ -128,7 +136,6 @@ public class FragmentQuestion extends Fragment {
         } else {
             return "";
         }
-
     }
 
     void setWidget() {
@@ -153,7 +160,7 @@ public class FragmentQuestion extends Fragment {
 
 
         } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Error, please try again!", Toast.LENGTH_SHORT).show();
 
         }
         txtNumberPage.setText(Integer.toString(pageNumber + 1));

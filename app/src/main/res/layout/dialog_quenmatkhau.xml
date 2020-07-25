@@ -1,67 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="17dp"
+    android:orientation="vertical"
     >
 
     <TextView
         android:id="@+id/txtTieuDe"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="32sp"
+        android:textSize="25sp"
         android:text="@string/laylaimatkhau"
 
-        android:textColor="#049DC3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#049DC3" />
 
-    <TextView
-        android:id="@+id/txtNoiDung"
-        android:layout_width="406dp"
-        android:layout_height="159dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="Bạn nhập Email vào ô bên dưới chung tôi sẽ gửi lại mật khẩu mới"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTieuDe" />
 
     <EditText
         android:id="@+id/txtEmail"
+        android:layout_gravity="center"
         android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content"
+
+        android:padding="15dp"
         android:background="@drawable/botron"
-        android:ems="10"
-        android:textSize="24sp"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNoiDung"
-        android:autofillHints="" />
+        android:hint="@string/email" />
 
     <Button
         android:id="@+id/btnGui"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/gui"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        android:background="@drawable/button_login_hover"
+        android:layout_margin="15dp"
+        android:text="@string/gui" />
 
     <Button
         android:id="@+id/btnThoat"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="@string/x"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:background="@drawable/button_login_hover"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content"
+        android:text="@string/x" />
+</LinearLayout>

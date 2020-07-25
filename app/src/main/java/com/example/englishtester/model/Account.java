@@ -1,17 +1,26 @@
 package com.example.englishtester.model;
 
 public class Account {
+    private String id;
     private String email;
     private String userName;
     private String pass;
 
+
     public Account() {
     }
 
-    public Account(String email, String userName, String pass) {
+    public Account(String id, String email, String userName, String pass) {
         this.email = email;
         this.userName = userName;
         this.pass = pass;
+    }
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -32,6 +41,16 @@ public class Account {
 
     public String getPass() {
         return pass;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", pass='" + pass + '\'' +
+                '}';
     }
 
     public void setPass(String pass) {

@@ -14,6 +14,7 @@
         android:src="@mipmap/ic_nav_account" />
 
     <TextView
+        android:id="@+id/txtName_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
@@ -24,6 +25,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:id="@+id/txtEmail_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"

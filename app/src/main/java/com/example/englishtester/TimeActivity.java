@@ -50,7 +50,7 @@ public class TimeActivity extends AppCompatActivity {
     ViewPager viewPager;
     CountDownTimer countDownTimer;
     DataViewN viewPagerAdapter;
-    private long timeSeconds = 150000;
+    private long timeSeconds = 900000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

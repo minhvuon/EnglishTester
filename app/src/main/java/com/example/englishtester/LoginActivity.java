@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        dangNhap();
+        loginButton();
     }
 
     private void showPass() {
@@ -237,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.cancel();
             } else
                 Toast.makeText(LoginActivity.this, "Password incorrect!", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -284,7 +283,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    void dangNhap() {
+    void loginButton() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,7 +312,6 @@ public class LoginActivity extends AppCompatActivity {
                             getData(url1);
                             checkLogin = 0;
                             checkLogin1 = 0;
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             if (cbLogin.isChecked()) {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("email", email);

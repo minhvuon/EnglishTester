@@ -256,11 +256,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("co"))
-                            Toast.makeText(LoginActivity.this, "Email da ton tai", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Email exist!", Toast.LENGTH_SHORT).show();
                         if (response.trim().equals("thanhcong")) {
-                            Toast.makeText(LoginActivity.this, "Dang ki Thanh cong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(LoginActivity.this, "Dang ki that bai", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

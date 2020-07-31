@@ -267,8 +267,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "Xay ra loi", Toast.LENGTH_SHORT).show();
-                        Log.d("AAA", "Loi\n" + error.toString());
+                        Toast.makeText(LoginActivity.this, "Error, please try again!", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
